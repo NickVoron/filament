@@ -67,6 +67,10 @@ std::string Path::getCanonicalPath(const std::string& path) {
     if (path.empty()) return "";
 
     char canonized[MAX_PATH];
+	if (PathIsRelative(path.c_str())) {
+		GetFullPathNameA(path.c_str(), MAX_PATH, canonized, nullptr);
+		return canonized;
+	}
     PathCanonicalize(canonized, path.c_str());
     return canonized;
 }
